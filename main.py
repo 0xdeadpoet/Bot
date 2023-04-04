@@ -8,7 +8,7 @@ from discord.ext import commands, tasks
 import json
 
 base_url = "https://ctftime.org"
-pe1 = "https://ctftime.org/writeup/30822" #last known writeup
+pe1 = "https://ctftime.org/writeup/36585" #last known writeup
 pe2 = ""
 
 def get_writeups():
