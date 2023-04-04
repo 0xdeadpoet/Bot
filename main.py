@@ -11,7 +11,7 @@ base_url = "https://ctftime.org"
 pe1 = "https://ctftime.org/writeup/36585" #last known writeup
 pe2 = ""
 
-def get_writeups():
+async def get_writeups():
     global pe1
     global pe2
 
@@ -24,7 +24,7 @@ def get_writeups():
     data = table.find('tbody').find_all("tr")
 
     # scrap information from the page
-    def scrap_origin(url):
+    async def scrap_origin(url):
         page = get(url, headers=headers)
         soup = BeautifulSoup(page.content, 'html.parser')
         link = soup.find_all("div", {'class':'well'})[-1]
@@ -48,7 +48,7 @@ def get_writeups():
         tag = ', '.join([x.string for x in l[2].find_all("span", {'class':'label label-info'})])
         tags = tag if tag !=None else "None"
         ctftime_writeup = base_url + l[4].a['href']
-        scraper = scrap_origin(ctftime_writeup)
+        scraper = await scrap_origin(ctftime_writeup)
         original_writeup = scraper[0]
         user_name = scraper[1]
         user_url = scraper[2]
@@ -83,7 +83,7 @@ async def diss_ping(ctx):
 
 @bot.command(name="meme", help="Get memes")
 async def get_meme(ctx):
-    r = await get("https://meme-api.herokuapp.com/gimme")
+    r = get("https://meme-api.herokuapp.com/gimme")
     await ctx.send(json.loads(r.text)['url'])
 
 
@@ -91,7 +91,7 @@ channels = [897142365628825620] #justatest[writeups]
 
 @tasks.loop(seconds=1250)
 async def give_writeups():
-    new_l = await get_writeups()
+    new_l = get_writeups.start()
     for channel_id in channels:
         message_channel = bot.get_channel(channel_id)
         print(f"Got channel {message_channel}")
