@@ -18,7 +18,7 @@ def get_writeups():
     writeup = base_url + "/writeups"
     headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:85.0) Gecko/20100101 Firefox/85.0", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8", "Accept-Language": "en-US,en;q=0.5", "Accept-Encoding": "gzip, deflate", "Referer": "https://ctftime.org/", "Connection": "close", "Upgrade-Insecure-Requests": "1", "Cache-Control": "max-age=0"}
 
-    page = get(writeup, headers=headers)
+    page = await get(writeup, headers=headers)
     soup = BeautifulSoup(page.content, 'html.parser')
     table = soup.find('table', id="writeups_table")
     data = table.find('tbody').find_all("tr")
@@ -76,14 +76,14 @@ bot = commands.Bot("?", intents=discord.Intents.default())
 async def diss_ping(ctx):
     await ctx.send("""**Pong** mothafuka """)
 
-@bot.command(name="joke", help="Get random punch line jokes")
-async def get_joke(ctx):
-    r = get("")
+#@bot.command(name="joke", help="Get random punch line jokes")
+#async def get_joke(ctx):
+#    r = get("")
 
 
 @bot.command(name="meme", help="Get memes")
 async def get_meme(ctx):
-    r = get("https://meme-api.herokuapp.com/gimme")
+    r = await get("https://meme-api.herokuapp.com/gimme")
     await ctx.send(json.loads(r.text)['url'])
 
 
