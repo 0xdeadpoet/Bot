@@ -70,7 +70,7 @@ def get_writeups():
             r_l.append(send_data) # make embedded links 
     return r_l
 
-bot = commands.Bot("?")
+bot = commands.Bot("?", intents=discord.Intents.default())
 
 @bot.command(name="ping", help="Alive check")
 async def diss_ping(ctx):
