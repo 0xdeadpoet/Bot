@@ -18,7 +18,7 @@ def get_writeups():
     writeup = base_url + "/writeups"
     headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:85.0) Gecko/20100101 Firefox/85.0", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8", "Accept-Language": "en-US,en;q=0.5", "Accept-Encoding": "gzip, deflate", "Referer": "https://ctftime.org/", "Connection": "close", "Upgrade-Insecure-Requests": "1", "Cache-Control": "max-age=0"}
 
-    page = await get(writeup, headers=headers)
+    page = get(writeup, headers=headers)
     soup = BeautifulSoup(page.content, 'html.parser')
     table = soup.find('table', id="writeups_table")
     data = table.find('tbody').find_all("tr")
@@ -91,7 +91,7 @@ channels = [897142365628825620] #justatest[writeups]
 
 @tasks.loop(seconds=1250)
 async def give_writeups():
-    new_l = get_writeups()
+    new_l = await get_writeups()
     for channel_id in channels:
         message_channel = bot.get_channel(channel_id)
         print(f"Got channel {message_channel}")
