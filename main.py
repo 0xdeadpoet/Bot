@@ -87,7 +87,7 @@ async def get_meme(ctx):
     await ctx.send(json.loads(r.text)['url'])
 
 
-channels = [800760384369459250, 897126741972254730] #mine, jopraveen's: 897126741972254730
+channels = [897142365628825620] #justatest[writeups]
 
 @tasks.loop(seconds=1250)
 async def give_writeups():
